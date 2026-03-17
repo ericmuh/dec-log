@@ -9,7 +9,7 @@ decisions = [
         "reason": "Market trend looked strong and many analysts predicted growth",
         "confidence_level": "3",
         "outcome": "Price dropped shortly after investment",
-        "lesson": "Avoid investing based only on hype, do deeper research",
+        "lesson_learned": "Avoid investing based only on hype, do deeper research",
         "created_at": "2026-03-01"
     },
     {
@@ -17,7 +17,7 @@ decisions = [
         "reason": "Students learn better by building real applications",
         "confidence_level": "2",
         "outcome": "Students engaged more and asked deeper questions",
-        "lesson": "Hands-on projects improve understanding significantly",
+        "lesson_learned": "Hands-on projects improve understanding significantly",
         "created_at": "2026-03-02"
     },
     {
@@ -25,7 +25,7 @@ decisions = [
         "reason": "More quiet time for focused work",
         "confidence_level": "5",
         "outcome": "Productivity improved in the mornings",
-        "lesson": "Morning routines can significantly increase focus",
+        "lesson_learned": "Morning routines can significantly increase focus",
         "created_at": "2026-03-03"
     },
     {
@@ -33,7 +33,7 @@ decisions = [
         "reason": "Coding and teaching would be easier with more screen space",
         "confidence_level": "4",
         "outcome": "Workflow became faster and more organized",
-        "lesson": "Small hardware upgrades can greatly improve productivity",
+        "lesson_learned": "Small hardware upgrades can greatly improve productivity",
         "created_at": "2026-03-05"
     },
     {
@@ -41,7 +41,7 @@ decisions = [
         "reason": "It is simple, visual, and good for explaining systems",
         "confidence_level": "5",
         "outcome": "Students understood system architecture faster",
-        "lesson": "Visual tools improve comprehension for complex topics",
+        "lesson_learned": "Visual tools improve comprehension for complex topics",
         "created_at": "2026-03-07"
 
     }
@@ -74,6 +74,7 @@ decision = {
 # Views
 
 # Would a place to see all decision (lists all decions)
+@app.route("/")
 @app.route("/decisions")
 def decisons():
 
@@ -113,6 +114,58 @@ def create_decision():
        print ("We Have posted ✨🧪", decisions)
 
     return render_template("create_decision.html", decisions=decisions)
+
+
+@app.route("/decisions/update/<int:id>", methods = ["GET", "POST"])
+def update_decision(id):
+
+    # get a specific decision in the list using the index,
+    # remove that decision, : option 2 --> point the index to the new decision
+    # add the new decision
+    if request.method =="POST":
+        update_decision = {
+            "title": request.form["title"],
+            "reason": request.form["reason"],
+            "confidence_level": request.form["confidence_level"],
+            
+            "outcome": request.form["outcome"],
+            "lesson_learned": request.form["lesson_learned"],
+
+            }
+    
+        decisions[id] = update_decision
+        print(decisions)
+
+    decision = ''
+    for decision in decisions:
+        # rendered_decision = decisions[id]
+        return render_template("update_decision.html", decision=decisions[id], id=id, decisions=decisions)
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Connecting to a database using sqlite3
+import sqlite3
+
+db = sqlite3.connect("database.db") # use in SQL
+
+cursor = db.cursor()
+
+
+# cursor.execute("CREATE TABLE decisions(title, reason, confidence_level,outcome, lesson_learned)")
+
+
+
+cursor.execute("DROP TABLE movie")
 
 
 

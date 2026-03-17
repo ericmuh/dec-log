@@ -1,0 +1,92 @@
+<h2>Update a Decisions</h2>
+
+<form action="/decisions/update/{{id}}" method="post">
+
+    <!-- title -->
+    <input type="text" name="title" value="{{decision.title}}">
+
+    <br> <br>
+
+    <!-- reason -->
+
+    <input type="text" name="reason" value="{{decision.reason}}"> <br>
+
+
+
+
+    <br>
+
+    <select name="confidence_level" id="confidence_level">
+        <option value={{decision.confidence_level}}>{{decision.confidence_level}}</option>
+
+    </select>
+
+    <br><br>
+
+    <h1>Outcome and Lesson Learned</h1>
+    <hr>
+
+    <select name="outcome" id="outcome">
+        <option value="success">Success</option>
+        <option value="pending"> Pending</option>
+        <option value="Failed">Failed</option>
+    </select>
+    <br> <br>
+
+    <label for="lesson_learned"></label><br>
+    <textarea name="lesson_learned">
+
+    </textarea>
+
+    <br> <br>
+    <button type="submit"> Update Decision</button>
+
+</form>
+
+
+
+
+<h1>decision for reference</h1>
+<table>
+    <tr>
+        <th>Decision</th>
+        <th>Reason</th>
+        <th>Confidence</th>
+        <th>Outcome</th>
+        <td>Lesson Learned</td>
+
+    </tr>
+
+    {%for decision in decisions %} <!-- this is jinja not html -->
+    <tr>
+        <td>{{decision.title}}</td>
+        <td>{{decision.reason}}</td>
+        <td>{{decision.confidence_level}}</td>
+        <td>{{decision.outcome}}</td>
+        <td>{{decision.lesson_learned}}</td>
+
+    </tr>
+
+    {%endfor%}
+
+
+
+
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+
+
+
+
+
+
+
+
+
+</table>
