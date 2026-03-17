@@ -1,0 +1,39 @@
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+
+<table>
+    <tr>
+        <th>Decision</th>
+        <th>Reason</th>
+        <th>Confidence</th>
+        <th>Outcome</th>
+
+    </tr>
+
+    {%for decision in decisions %} <!-- this is jinja not html -->
+    <tr>
+        <td>{{decision.title}}</td>
+        <td>{{decision.reason}}</td>
+        <td>{{decision.confidence_level}}</td>
+        <td>{{decision.outcome}}</td>
+
+    </tr>
+
+    {%endfor%}
+
+
+
+
+
+
+
+
+
+
+</table>

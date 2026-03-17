@@ -1,0 +1,120 @@
+from flask import Flask, render_template,request
+
+app = Flask(__name__)
+
+# this will act as our database ( A list of python dictionaries)
+decisions = [
+    {
+        "title": "Invest in Bitcoin",
+        "reason": "Market trend looked strong and many analysts predicted growth",
+        "confidence_level": "3",
+        "outcome": "Price dropped shortly after investment",
+        "lesson": "Avoid investing based only on hype, do deeper research",
+        "created_at": "2026-03-01"
+    },
+    {
+        "title": "Start a Flask teaching project",
+        "reason": "Students learn better by building real applications",
+        "confidence_level": "2",
+        "outcome": "Students engaged more and asked deeper questions",
+        "lesson": "Hands-on projects improve understanding significantly",
+        "created_at": "2026-03-02"
+    },
+    {
+        "title": "Wake up at 5 AM daily",
+        "reason": "More quiet time for focused work",
+        "confidence_level": "5",
+        "outcome": "Productivity improved in the mornings",
+        "lesson": "Morning routines can significantly increase focus",
+        "created_at": "2026-03-03"
+    },
+    {
+        "title": "Buy a second monitor",
+        "reason": "Coding and teaching would be easier with more screen space",
+        "confidence_level": "4",
+        "outcome": "Workflow became faster and more organized",
+        "lesson": "Small hardware upgrades can greatly improve productivity",
+        "created_at": "2026-03-05"
+    },
+    {
+        "title": "Use Excalidraw for teaching diagrams",
+        "reason": "It is simple, visual, and good for explaining systems",
+        "confidence_level": "5",
+        "outcome": "Students understood system architecture faster",
+        "lesson": "Visual tools improve comprehension for complex topics",
+        "created_at": "2026-03-07"
+
+    }
+]
+
+# structure of a single decision ( so far this does nothing)
+decision = {
+"ID":"", # interger
+"title": "", # text
+"reason": "", # text
+"confidence level":"", # interger
+"outcome": "", #text
+"lesson": "" , #text
+"created_at": "" #date  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Views
+
+# Would a place to see all decision (lists all decions)
+@app.route("/decisions")
+def decisons():
+
+    # logic to retrieve all decision from the database
+
+
+    return render_template("home.html", decisions=decisions)
+
+
+
+
+# Reading a Single Decsions
+@app.route("/decisions/<int:id>")
+def single_decision(id):
+    # rendered_decision = None
+    for decision in decisions:
+        # rendered_decision = decisions[id]
+        return render_template("single_decision.html", decision=decisions[id])
+
+
+
+
+
+# Create a decision
+@app.route("/create", methods=["GET", "POST"])
+def create_decision():
+    if request.method=="POST":
+        # logic to create a decision
+        
+       decision = {
+        "title": request.form["title"],
+        "reason": request.form["reason"],
+        "confidence_level": request.form["confidence_level"],}
+       decisions.append(decision)
+
+
+       print ("We Have posted ✨🧪", decisions)
+
+    return render_template("create_decision.html", decisions=decisions)
+
+
+
+if __name__ =="__main__":
+    app.run(debug=True)

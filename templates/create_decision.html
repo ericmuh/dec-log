@@ -1,0 +1,79 @@
+<h2>create a Decisions</h2>
+
+<form action="/create" method="post">
+
+    <!-- title -->
+    <label for="title">Type your decision:</label><br>
+    <input type="text" name="title">
+
+    <br>
+
+    <!-- reason -->
+
+    <label for="reason">Whats your reason for the Decision:</label><br>
+    <input type="text" name="reason"> <br>
+
+    <!-- confidence level -->
+
+    <!-- <label for="confidence_level">How confident are you</label><br>
+    <input type="number" name="confidence_level"> -->
+
+
+
+    <label for="confidence_level">How confident are you</label> <br>
+
+    <select name="confidence_level" id="confidence_level">
+        <option value="1">I am skeptical</option>
+        <option value="2">....</option>
+        <option value="3">....</option>
+        <option value="5"> I am confident about this</option>
+    </select>
+
+    <br><br>
+    <button type="submit"> Log your Decision</button>
+</form>
+
+
+<h1>List of your Decisions</h1>
+
+
+
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+
+<table>
+    <tr>
+        <th>Decision</th>
+        <th>Reason</th>
+        <th>Confidence</th>
+        <th>Outcome</th>
+
+    </tr>
+
+    {%for decision in decisions %} <!-- this is jinja not html -->
+    <tr>
+        <td>{{decision.title}}</td>
+        <td>{{decision.reason}}</td>
+        <td>{{decision.confidence_level}}</td>
+        <td>{{decision.outcome}}</td>
+
+    </tr>
+
+    {%endfor%}
+
+
+
+
+
+
+
+
+
+
+</table>
