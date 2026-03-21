@@ -1,37 +1,43 @@
-<h2>create a Decisions</h2>
+{% extends "base.html" %}
 
-<form action="/create" method="post">
+{% block title %}Create Decision | Deci Log{% endblock %}
+
+{% block content %}
+<h2 class="section-title">create a Decisions</h2>
+
+<form action="/create" method="post" class="form-grid">
 
     <!-- title -->
-    <label for="title">Type your decision:</label><br>
-    <input type="text" name="title">
+    <div>
+        <label for="title">Type your decision:</label><br>
+        <input type="text" name="title">
 
-    <br>
+    </div>
 
     <!-- reason -->
-
-    <label for="reason">Whats your reason for the Decision:</label><br>
-    <input type="text" name="reason"> <br>
-
+    <div>
+        <label for="reason">Whats your reason for the Decision:</label><br>
+        <input type="text" name="reason"> <br>
+    </div>
     <!-- confidence level -->
 
     <!-- <label for="confidence_level">How confident are you</label><br>
     <input type="number" name="confidence_level"> -->
 
 
+    <div>
+        <label for="confidence_level">How confident are you</label> <br> <br>
 
-    <label for="confidence_level">How confident are you</label> <br> <br>
+        <select name="confidence_level" id="confidence_level">
+            <option value="1">I am not sure about this</option>
+            <option value="2">I am skeptical</option>
+            <option value="3"> I am 50/50</option>
+            <option value="4">I somehow trust this</option>
+            <option value="5"> I am confident about this</option>
+        </select>
 
-    <select name="confidence_level" id="confidence_level">
-        <option value="1">I am not sure about this</option>
-        <option value="2">I am skeptical</option>
-        <option value="3"> I am 50/50</option>
-        <option value="4">I somehow trust this</option>
-        <option value="5"> I am confident about this</option>
-    </select>
-
-    <br><br>
-    <button type="submit"> Log your Decision</button>
+    </div>
+    <button type="submit" class="btn btn-primary"> Log your Decision</button>
 </form>
 
 
@@ -54,6 +60,7 @@
         <th>Reason</th>
         <th>Confidence</th>
         <th>Outcome</th>
+        <th>Actions</th>
 
     </tr>
 
@@ -63,6 +70,14 @@
         <td>{{decision.reason}}</td>
         <td>{{decision.confidence_level}}</td>
         <td>{{decision.outcome}}</td>
+
+        <td>
+
+            <a class="btn btn-muted" href="/decisions/{{decision.id}}">Details</a>
+
+        </td>
+
+
 
     </tr>
 
@@ -78,3 +93,5 @@
 
 
 </table>
+
+{% endblock %}

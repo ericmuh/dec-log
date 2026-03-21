@@ -5,6 +5,7 @@ app = Flask(__name__)
 # this will act as our database ( A list of python dictionaries)
 decisions = [
     {
+        "id": 0,
         "title": "Invest in Bitcoin",
         "reason": "Market trend looked strong and many analysts predicted growth",
         "confidence_level": "3",
@@ -21,6 +22,7 @@ decisions = [
         "created_at": "2026-03-02"
     },
     {
+        "id": 2,
         "title": "Wake up at 5 AM daily",
         "reason": "More quiet time for focused work",
         "confidence_level": "5",
@@ -29,6 +31,7 @@ decisions = [
         "created_at": "2026-03-03"
     },
     {
+        "id": 3,
         "title": "Buy a second monitor",
         "reason": "Coding and teaching would be easier with more screen space",
         "confidence_level": "4",
@@ -37,6 +40,7 @@ decisions = [
         "created_at": "2026-03-05"
     },
     {
+        "id": 4,
         "title": "Use Excalidraw for teaching diagrams",
         "reason": "It is simple, visual, and good for explaining systems",
         "confidence_level": "5",
@@ -165,7 +169,6 @@ cursor = db.cursor()
 
 
 
-cursor.execute("DROP TABLE movie")
 
 
 
