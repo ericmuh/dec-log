@@ -1,6 +1,54 @@
-from flask import Flask, render_template,request
+from flask import Flask, render_template,request, redirect
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///decisions.db"
+
+
+# Definiing the DB ( instance of SQLAlchemy and attaching our app)
+db = SQLAlchemy(app)
+
+
+
+
+decision = {
+"ID":"", # interger
+"title": "", # text
+"reason": "", # text
+"confidence level":"", # interger
+"outcome": "", #text
+"lesson": "" , #text
+"created_at": "" #date  
+}
+
+
+# A Model --> defines a table in our SQL database
+class Decision(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title =db.Column(db.String(120)) 
+    reason =db.Column(db.String(120)) 
+    confidence_level=db.Column(db.Integer) 
+    outcome =db.Column(db.String) 
+    lesson = db.Column(db.Text)
+    create_at = db.Column(db.DateTime)
+
+
+
+
+
+with app.app_context():
+    db.create_all()
+
+
+
+
+
+
+
+
+
 
 # this will act as our database ( A list of python dictionaries)
 decisions = [
@@ -67,15 +115,7 @@ decision = {
 
 
 
-
-
-
-
-
-
-
-
-# Views
+# VIEWS
 
 # Would a place to see all decision (lists all decions)
 @app.route("/")
@@ -83,7 +123,7 @@ decision = {
 def decisons():
 
     # logic to retrieve all decision from the database
-
+    decisions = Decision.query.all()
 
     return render_template("home.html", decisions=decisions)
 
@@ -93,6 +133,8 @@ def decisons():
 # Reading a Single Decsions
 @app.route("/decisions/<int:id>")
 def single_decision(id):
+
+    decision = Decision.get_or_404(id)
     # rendered_decision = None
     for decision in decisions:
         # rendered_decision = decisions[id]
@@ -108,11 +150,14 @@ def create_decision():
     if request.method=="POST":
         # logic to create a decision
         
-       decision = {
-        "title": request.form["title"],
-        "reason": request.form["reason"],
-        "confidence_level": request.form["confidence_level"],}
-       decisions.append(decision)
+       decision = Decision(
+        title= request.form["title"],
+        reason=request.form["reason"],
+        confidence_level=request.form["confidence_level"])
+       db.session.add(decision)
+       db.session.commit()
+    #    decisions.append(decision)
+
 
 
        print ("We Have posted ✨🧪", decisions)
@@ -120,6 +165,8 @@ def create_decision():
     return render_template("create_decision.html", decisions=decisions)
 
 
+
+# Update A decision
 @app.route("/decisions/update/<int:id>", methods = ["GET", "POST"])
 def update_decision(id):
 
@@ -148,6 +195,11 @@ def update_decision(id):
 
 
 
+# Delete a Decision
+@app.route("/decisions/delete/<int:id>", methods = ["GET", "POST"])
+def delete_decision(id):
+    decisions.pop(id)
+    return redirect("/")
 
 
 
@@ -158,11 +210,11 @@ def update_decision(id):
 
 
 # Connecting to a database using sqlite3
-import sqlite3
+# import sqlite3
 
-db = sqlite3.connect("database.db") # use in SQL
+# db = sqlite3.connect("database.db") # use in SQL
 
-cursor = db.cursor()
+# cursor = db.cursor()
 
 
 # cursor.execute("CREATE TABLE decisions(title, reason, confidence_level,outcome, lesson_learned)")

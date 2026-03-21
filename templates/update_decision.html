@@ -1,27 +1,32 @@
-<h2>Update a Decisions</h2>
+{% extends "base.html"%}
 
-<form action="/decisions/update/{{id}}" method="post">
+{%block content%}
+<h2 class="section-title">Update a Decisions</h2>
+
+<form action="/decisions/update/{{id}}" method="post" class="form-grid">
 
     <!-- title -->
-    <input type="text" name="title" value="{{decision.title}}">
+    <div>
+        <input type="text" name="title" value="{{decision.title}}">
 
-    <br> <br>
+    </div>
 
     <!-- reason -->
+    <div>
 
-    <input type="text" name="reason" value="{{decision.reason}}"> <br>
+        <input type="text" name="reason" value="{{decision.reason}}"> <br>
+
+    </div>
 
 
+    <div>
 
+        <select name="confidence_level" id="confidence_level">
+            <option value={{decision.confidence_level}}>{{decision.confidence_level}}</option>
 
-    <br>
+        </select>
 
-    <select name="confidence_level" id="confidence_level">
-        <option value={{decision.confidence_level}}>{{decision.confidence_level}}</option>
-
-    </select>
-
-    <br><br>
+    </div>
 
     <h1>Outcome and Lesson Learned</h1>
     <hr>
@@ -31,15 +36,15 @@
         <option value="pending"> Pending</option>
         <option value="Failed">Failed</option>
     </select>
-    <br> <br>
+    <div>
 
-    <label for="lesson_learned"></label><br>
-    <textarea name="lesson_learned">
+        <label for="lesson_learned"></label><br>
+        <textarea name="lesson_learned">
 
     </textarea>
 
-    <br> <br>
-    <button type="submit"> Update Decision</button>
+    </div>
+    <button type="submit" class="btn btn-primary"> Update Decision</button>
 
 </form>
 
@@ -90,3 +95,5 @@
 
 
 </table>
+
+{%endblock content%}
