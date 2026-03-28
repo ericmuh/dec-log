@@ -54,44 +54,5 @@
     }
 </style>
 
-<table>
-    <tr>
-        <th>Decision</th>
-        <th>Reason</th>
-        <th>Confidence</th>
-        <th>Outcome</th>
-        <th>Actions</th>
-
-    </tr>
-
-    {%for decision in decisions %} <!-- this is jinja not html -->
-    <tr>
-        <td>{{decision.title}}</td>
-        <td>{{decision.reason}}</td>
-        <td>{{decision.confidence_level}}</td>
-        <td>{{decision.outcome}}</td>
-
-        <td>
-
-            <a class="btn btn-muted" href="/decisions/{{decision.id}}">Details</a>
-
-        </td>
-
-
-
-    </tr>
-
-    {%endfor%}
-
-
-
-
-
-
-
-
-
-
-</table>
 
 {% endblock %}

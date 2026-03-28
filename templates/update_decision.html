@@ -3,7 +3,7 @@
 {%block content%}
 <h2 class="section-title">Update a Decisions</h2>
 
-<form action="/decisions/update/{{id}}" method="post" class="form-grid">
+<form action="{{url_for('update_decision' ,id=decision.id)}}" method="post" class="form-grid">
 
     <!-- title -->
     <div>
@@ -39,11 +39,10 @@
     <div>
 
         <label for="lesson_learned"></label><br>
-        <textarea name="lesson_learned">
-
-    </textarea>
-
+        <textarea name="lesson_learned">{{decision.lesson_learned}}</textarea>
     </div>
+
+
     <button type="submit" class="btn btn-primary"> Update Decision</button>
 
 </form>
