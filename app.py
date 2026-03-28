@@ -1,14 +1,22 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from datetime import datetime
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///decisions.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 
 
 # Definiing the DB ( instance of SQLAlchemy and attaching our app)
 db = SQLAlchemy(app)
+
+migrate = Migrate(app, db)
 
 
 # A Model --> defines a table in our SQL database
@@ -19,9 +27,11 @@ class Decision(db.Model):
     confidence_level = db.Column(db.Integer)
     outcome = db.Column(db.String)
     lesson = db.Column(db.Text)
-    create_at = db.Column(db.DateTime)
+    due_date = db.Column(db.String(128))
+    create_at = db.Column(db.DateTime, default=datetime.now())
 
 
+# This creates all tables, doesn't update tables if your models change
 with app.app_context():
     db.create_all()
 
@@ -83,12 +93,11 @@ def update_decision(id):
     if request.method == "POST":
 
         # updating the decision based on existing data
-        decision.title=request.form["title"]
-        decision.reason=request.form["reason"]
-        decision.confidence_level=request.form["confidence_level"]
-        decision.outcome=request.form["outcome"]
-        decision.lesson_learned=request.form["lesson_learned"]
-        
+        decision.title = request.form["title"]
+        decision.reason = request.form["reason"]
+        decision.confidence_level = request.form["confidence_level"]
+        decision.outcome = request.form["outcome"]
+        decision.lesson_learned = request.form["lesson_learned"]
 
         # commiting the changes to the table
         db.session.commit()
@@ -98,8 +107,9 @@ def update_decision(id):
         return redirect(url_for("decisions"))
 
     return render_template(
-            "update_decision.html", decision=decision,
-        )
+        "update_decision.html",
+        decision=decision,
+    )
 
 
 # Delete a Decision : STANDALONE as we don't have to render a template ( use in the single decision template)
