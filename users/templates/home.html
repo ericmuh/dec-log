@@ -28,7 +28,7 @@
         <td>{{decision.reason}}</td>
         <td>{{decision.confidence_level}}</td>
         <td>{{decision.outcome}}</td>
-        <td><a href="{{url_for('single_decision' ,id=decision.id)}}">details</a></td>
+        <td><a href="{{url_for('decision.single_decision' ,id=decision.id)}}">details</a></td>
     </tr>
 
     {%endfor%}
