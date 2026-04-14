@@ -1,7 +1,7 @@
 import os
 
 from dotenv import load_dotenv
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flasgger import Swagger
 from marshmallow import ValidationError
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
@@ -41,6 +41,10 @@ def create_app(config_name: str | None = None):
     app.register_blueprint(user_bp, url_prefix="/api/user")
     app.register_blueprint(decision_bp, url_prefix="/api/decisions")
 
+    @app.get("/")
+    def root():
+        return redirect(url_for("flasgger.apidocs"))
+
     _register_error_handlers(app)
     _register_login_manager_handlers()
     _ensure_upload_directory(app)
@@ -70,7 +74,7 @@ def _register_error_handlers(app: Flask) -> None:
 
     @app.errorhandler(404)
     def handle_not_found(_error):
-        return api_response(False, "Resource not found", {}, 404)
+        return redirect(url_for("root"))
 
     @app.errorhandler(405)
     def handle_method_not_allowed(_error):

@@ -18,11 +18,15 @@ class RegisterResource(Resource):
         ---
         tags:
           - Auth
+        summary: Register account
+        description: Create a new user account using a unique username and email.
         consumes:
+          - application/json
+        produces:
           - application/json
         parameters:
           - in: body
-            name: body
+            name: register_payload
             required: true
             schema:
               type: object
@@ -33,14 +37,65 @@ class RegisterResource(Resource):
               properties:
                 username:
                   type: string
+                  minLength: 3
+                  example: alice
                 email:
                   type: string
                   format: email
+                  example: alice@example.com
                 password:
                   type: string
+                  minLength: 8
+                  example: StrongPass123
         responses:
           201:
             description: User registered successfully
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: User registered successfully
+                data:
+                  type: object
+                  properties:
+                    user:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        username:
+                          type: string
+                          example: alice
+                        email:
+                          type: string
+                          example: alice@example.com
+                        profile_picture:
+                          type: string
+                          nullable: true
+                        profile_picture_url:
+                          type: string
+                          nullable: true
+                        created_at:
+                          type: string
+                          format: date-time
+          400:
+            description: Duplicate email/username or invalid payload
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: Username already exists
+                data:
+                  type: object
         """
         payload = register_schema.load(api_request_json())
 
@@ -69,20 +124,66 @@ class LoginResource(Resource):
         ---
         tags:
           - Auth
+        summary: Login
+        description: Authenticate with email and password. Returns a session cookie.
         consumes:
+          - application/json
+        produces:
           - application/json
         parameters:
           - in: body
-            name: body
+            name: login_payload
             required: true
             schema:
               type: object
               required:
                 - email
                 - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: alice@example.com
+                password:
+                  type: string
+                  example: StrongPass123
         responses:
           200:
             description: User logged in successfully
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: Login successful
+                data:
+                  type: object
+                  properties:
+                    user:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        username:
+                          type: string
+                        email:
+                          type: string
+          401:
+            description: Invalid credentials
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: Invalid email or password
+                data:
+                  type: object
         """
         payload = login_schema.load(api_request_json())
         user = User.query.filter_by(email=payload["email"].lower()).first()
@@ -102,9 +203,24 @@ class LogoutResource(Resource):
         ---
         tags:
           - Auth
+        summary: Logout
+        description: Clears the active user session.
+        produces:
+          - application/json
         responses:
           200:
             description: User logged out successfully
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: Logout successful
+                data:
+                  type: object
         """
         logout_user()
         return api_response(True, "Logout successful", {}, 200)

@@ -43,11 +43,15 @@ class DecisionListResource(Resource):
         ---
         tags:
           - Decisions
+        summary: Create decision
+        description: Create a decision entry for the authenticated user.
         consumes:
+          - application/json
+        produces:
           - application/json
         parameters:
           - in: body
-            name: body
+            name: decision_payload
             required: true
             schema:
               type: object
@@ -55,9 +59,84 @@ class DecisionListResource(Resource):
                 - title
                 - reason
                 - confidence_level
+              properties:
+                title:
+                  type: string
+                  minLength: 1
+                  example: Move to a new city
+                reason:
+                  type: string
+                  minLength: 1
+                  example: Better long-term career opportunities
+                confidence_level:
+                  type: integer
+                  minimum: 1
+                  maximum: 10
+                  example: 8
+                outcome:
+                  type: string
+                  nullable: true
+                  example: Pending
+                lesson:
+                  type: string
+                  nullable: true
+                  example: Validate assumptions with a mentor first
         responses:
           201:
             description: Decision created successfully
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: Decision created successfully
+                data:
+                  type: object
+                  properties:
+                    decision:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        title:
+                          type: string
+                          example: Move to a new city
+                        reason:
+                          type: string
+                        confidence_level:
+                          type: integer
+                          example: 8
+                        outcome:
+                          type: string
+                          nullable: true
+                        lesson:
+                          type: string
+                          nullable: true
+                        created_at:
+                          type: string
+                          format: date-time
+                        user_id:
+                          type: integer
+                          example: 1
+          400:
+            description: Validation error
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: Validation failed
+                data:
+                  type: object
+          401:
+            description: Authentication required
         """
         payload = decision_schema.load(request.get_json(silent=True) or {})
         decision = Decision(

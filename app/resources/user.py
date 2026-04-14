@@ -97,16 +97,63 @@ class UserProfilePictureResource(Resource):
         ---
         tags:
           - Users
+        summary: Upload profile picture
+        description: Upload an image file. The server resizes it to 300x300 and stores it.
         consumes:
           - multipart/form-data
+        produces:
+          - application/json
         parameters:
           - in: formData
             name: profile_picture
             type: file
             required: true
+            description: jpg, jpeg, png, gif, or webp file
         responses:
           200:
             description: Profile picture updated successfully
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: Profile picture updated successfully
+                data:
+                  type: object
+                  properties:
+                    user:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        username:
+                          type: string
+                        email:
+                          type: string
+                        profile_picture:
+                          type: string
+                          example: uploads/6d1ec83da7db40f8adf2c55ec9f616fe.jpg
+                        profile_picture_url:
+                          type: string
+                          example: http://127.0.0.1:5000/static/uploads/6d1ec83da7db40f8adf2c55ec9f616fe.jpg
+          400:
+            description: Missing file or unsupported format
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: Unsupported image type
+                data:
+                  type: object
+          401:
+            description: Authentication required
         """
         uploaded_file = request.files.get("profile_picture")
 
