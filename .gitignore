@@ -1,0 +1,34 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+env/
+venv/
+.venv/
+myenv/
+
+# Environment variables
+.env
+
+# macOS
+.DS_Store
+
+# Test/cache artifacts
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Course source documents
+course.md
+guide.md
+myenv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd   
+.DS_Store
+.env
+guide.md
+course.md
