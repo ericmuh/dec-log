@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Decision #{{ decision.id }}{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Decision Details</h1>
+<div class="rule"></div>
+
+<article class="detail-panel">
+    <p><strong>Title:</strong> {{ decision.title }}</p>
+    <p><strong>Reason:</strong> {{ decision.reason }}</p>
+    <p><strong>Confidence Level:</strong> {{ decision.confidence_level }} / 5</p>
+    <p><strong>Outcome:</strong> {{ decision.outcome }}</p>
+    <p><strong>Lesson Learned:</strong> {{ decision.lesson }}</p>
+    <p><strong>Created At:</strong> {{ decision.created_at }}</p>
+</article>
+
+<div class="detail-actions">
+    <a class="btn btn-success" href="{{ url_for('edit_decision', decision_id=decision.id) }}">Edit Decision</a>
+    <form method="post" action="{{ url_for('delete_decision', decision_id=decision.id) }}">
+        <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
+</div>
+{% endblock %}

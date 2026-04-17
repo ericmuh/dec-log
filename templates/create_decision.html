@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Decision{% endblock %}
+
+{% block content %}
+<h1 class="page-title">CREATE A DECISION LOG</h1>
+
+<section class="form-panel">
+    <form method="post" action="{{ url_for('create_decision') }}">
+        <label for="decision">Type your decision</label>
+        <input id="decision" name="title" type="text" placeholder="Invest in Bitcoin">
+
+        <label for="reason">Whats your reason for the decision</label>
+        <input id="reason" name="reason" type="text" placeholder="Good market trends">
+
+        <label for="confidence">Confidence level</label>
+        <select id="confidence" name="confidence_level">
+            <option value="" selected>Select Option....</option>
+            <option value="1">1 - I am not sure about this</option>
+            <option value="2">2 - I am skeptical</option>
+            <option value="3">3 - I am 50/50</option>
+            <option value="4">4 - I somehow trust this</option>
+            <option value="5">5 - I am confident about this</option>
+        </select>
+
+        <label for="outcome">Outcome</label>
+        <select id="outcome" name="outcome">
+            <option value="Pending" selected>Pending</option>
+            <option value="Success">Success</option>
+            <option value="Failed">Failed</option>
+        </select>
+
+        <label for="lesson">What did you learn?</label>
+        <textarea id="lesson" name="lesson" rows="5" placeholder="Write a quick lesson learned"></textarea>
+
+        <button class="btn btn-primary btn-block" type="submit">Log Decision</button>
+    </form>
+</section>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Decision{% endblock %}
+
+{% block content %}
+<h1 class="page-title page-title-warm">UPDATE A DECISION LOG</h1>
+
+<section class="form-panel">
+    <form method="post" action="{{ url_for('edit_decision', decision_id=decision.id) }}">
+        <label for="title">Type your decision</label>
+        <input id="title" name="title" type="text" placeholder="{{ decision.title }}">
+
+        <label for="reason">Whats your reason for the decision</label>
+        <input id="reason" name="reason" type="text" placeholder="{{ decision.reason }}">
+
+        <label for="confidence">Confidence level</label>
+        <select id="confidence" name="confidence_level">
+            <option value="">Keep current ({{ decision.confidence_level }}/5)</option>
+            <option value="1">1 - I am not sure about this</option>
+            <option value="2">2 - I am skeptical</option>
+            <option value="3">3 - I am 50/50</option>
+            <option value="4">4 - I somehow trust this</option>
+            <option value="5">5 - I am confident about this</option>
+        </select>
+
+        <h2 class="subhead">Outcome and Lesson Learned</h2>
+
+        <label for="outcome">Outcomes</label>
+        <select id="outcome" name="outcome">
+            <option value="">Keep current ({{ decision.outcome }})</option>
+            <option value="Pending">Pending</option>
+            <option value="Success">Success</option>
+            <option value="Failed">Failed</option>
+        </select>
+
+        <label for="lesson">What did you learn?</label>
+        <textarea id="lesson" name="lesson" rows="5" placeholder="{{ decision.lesson }}"></textarea>
+
+        <button class="btn btn-warm btn-block" type="submit">Update Decision</button>
+    </form>
+</section>
+{% endblock %}

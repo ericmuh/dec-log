@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}About Lesson 3{% endblock %}
+
+{% block content %}
+<h1 class="page-title page-title-left">"Decision Log" App</h1>
+
+<section class="notes">
+    <p>A simple system where users log decisions they made and their outcomes later.</p>
+
+    <h2>Example</h2>
+    <ul>
+        <li>Decision: "Invest in Bitcoin"</li>
+        <li>Reason: "Market trend looked strong"</li>
+        <li>Outcome later: "Lost money / gained money"</li>
+        <li>Lesson learned</li>
+    </ul>
+
+    <h2>Features</h2>
+    <h3>Create</h3>
+    <ul>
+        <li>Add decision</li>
+        <li>Reason</li>
+        <li>Confidence level (1-5)</li>
+    </ul>
+
+    <h3>Read</h3>
+    <ul>
+        <li>List all decisions</li>
+        <li>View decision detail</li>
+    </ul>
+
+    <h3>Update</h3>
+    <ul>
+        <li>Add outcome later</li>
+        <li>Update lesson learned</li>
+    </ul>
+
+    <h3>Delete</h3>
+    <ul>
+        <li>Remove bad decisions</li>
+    </ul>
+</section>
+{% endblock %}

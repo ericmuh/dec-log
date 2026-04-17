@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Decision Not Found{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Decision Not Found</h1>
+<p class="lead">No decision was found with ID {{ decision_id }}.</p>
+<div class="quick-actions">
+    <a class="btn btn-primary" href="{{ url_for('home') }}">Return to Decision List</a>
+</div>
+{% endblock %}
