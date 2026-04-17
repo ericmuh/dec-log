@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Decisions{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <div class="heading-row">
+        <h2>Decisions</h2>
+        <a class="btn" href="{{ url_for('decisions.create_decision') }}">New Decision</a>
+    </div>
+
+    {% if decisions %}
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>User</th>
+                <th>Confidence</th>
+                <th>Outcome</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for decision in decisions %}
+            <tr>
+                <td><a href="{{ url_for('decisions.decision_detail', decision_id=decision.id) }}">{{ decision.title
+                        }}</a></td>
+                <td>{{ decision.user.name }}</td>
+                <td>{{ decision.confidence_level }}/5</td>
+                <td>{{ decision.outcome }}</td>
+                <td>
+                    <a class="btn" href="{{ url_for('decisions.edit_decision', decision_id=decision.id) }}">Edit</a>
+                    <form method="post" action="{{ url_for('decisions.delete_decision', decision_id=decision.id) }}"
+                        class="inline-form">
+                        <button class="btn danger" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No decisions yet. Add a user, then create a decision.</p>
+    {% endif %}
+</section>
+{% endblock %}

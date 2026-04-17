@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <h2>Lesson 5: Blueprints and Project Organization</h2>
+    <p>This stage organizes the Decision Log app into blueprints and adds a User model.</p>
+    <div class="actions">
+        <a class="btn" href="{{ url_for('users.create_user') }}">Create User</a>
+        <a class="btn" href="{{ url_for('decisions.create_decision') }}">Create Decision</a>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Decision{% endblock %}
+
+{% block content %}
+<section class="panel form-panel">
+    <h2>Create Decision</h2>
+
+    {% if users %}
+    <form method="post" action="{{ url_for('decisions.create_decision') }}">
+        <label for="title">Title</label>
+        <input id="title" name="title" type="text" placeholder="Adopt weekly planning">
+
+        <label for="reason">Reason</label>
+        <input id="reason" name="reason" type="text" placeholder="Improve team coordination">
+
+        <label for="confidence_level">Confidence</label>
+        <select id="confidence_level" name="confidence_level">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3" selected>3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+
+        <label for="user_id">User</label>
+        <select id="user_id" name="user_id">
+            {% for user in users %}
+            <option value="{{ user.id }}">{{ user.name }} ({{ user.email }})</option>
+            {% endfor %}
+        </select>
+
+        <button class="btn" type="submit">Save Decision</button>
+    </form>
+    {% else %}
+    <p>Create at least one user before adding decisions.</p>
+    <a class="btn" href="{{ url_for('users.create_user') }}">Create User</a>
+    {% endif %}
+</section>
+{% endblock %}
