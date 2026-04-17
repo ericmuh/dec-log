@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Decision Log</title>
+</head>
+
+<body>
+    <h1>Decision Log</h1>
+    <p>Intro lesson: Flask fundamentals with routes and templates.</p>
+
+    <h2>Sample Decisions</h2>
+    <ul>
+        {% for decision in decisions %}
+        <li>
+            <strong>{{ decision.title }}</strong><br>
+            <span>{{ decision.reason }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <p><a href="/about">About this lesson</a></p>
+</body>
+
+</html>
