@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Decision{% endblock %}
+
+{% block content %}
+<section class="panel form-panel">
+    <h2>Create Decision</h2>
+    <form method="post" action="{{ url_for('create_decision') }}">
+        <label for="title">Decision Title</label>
+        <input id="title" name="title" type="text" placeholder="Invest in Bitcoin">
+
+        <label for="reason">Reason</label>
+        <input id="reason" name="reason" type="text" placeholder="Good market trends">
+
+        <label for="confidence">Confidence level (1-5)</label>
+        <select id="confidence" name="confidence_level">
+            <option value="" selected>Select confidence</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+
+        <button class="btn" type="submit">Save Decision</button>
+    </form>
+</section>
+{% endblock %}

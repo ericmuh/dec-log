@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Decision{% endblock %}
+
+{% block content %}
+<section class="panel form-panel">
+    <h2>Update Decision</h2>
+    <form method="post" action="{{ url_for('edit_decision', decision_id=decision.id) }}">
+        <label for="title">Decision Title</label>
+        <input id="title" name="title" type="text" placeholder="{{ decision.title }}">
+
+        <label for="reason">Reason</label>
+        <input id="reason" name="reason" type="text" placeholder="{{ decision.reason }}">
+
+        <label for="confidence">Confidence level (1-5)</label>
+        <select id="confidence" name="confidence_level">
+            <option value="">Keep current ({{ decision.confidence_level }})</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+
+        <label for="outcome">Outcome</label>
+        <select id="outcome" name="outcome">
+            <option value="">Keep current ({{ decision.outcome }})</option>
+            <option value="Pending">Pending</option>
+            <option value="Success">Success</option>
+            <option value="Failed">Failed</option>
+        </select>
+
+        <label for="lesson">Lesson learned</label>
+        <textarea id="lesson" name="lesson" rows="4" placeholder="{{ decision.lesson }}"></textarea>
+
+        <button class="btn" type="submit">Update Decision</button>
+    </form>
+</section>
+{% endblock %}
