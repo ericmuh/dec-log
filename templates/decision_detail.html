@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Decision {{ decision.id }}</title>
+</head>
+
+<body>
+    <h1>{{ decision.title }}</h1>
+    <p><strong>Reason:</strong> {{ decision.reason }}</p>
+    <p><strong>Confidence Level:</strong> {{ decision.confidence_level }}/10</p>
+
+    <!-- using URL for instead of hardcoding the URL like <a href="/">Back to decision list</a> -->
+    <p><a href="{{ url_for('home') }}">Back to decision list</a></p>
+</body>
+
+</html>

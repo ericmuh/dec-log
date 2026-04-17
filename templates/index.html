@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Decision Log | Lesson 2</title>
+</head>
+<body>
+  <h1>Decision Log</h1>
+  <p>Lesson 2: Dynamic routes and HTTP responses.</p>
+
+  <h2>Decisions</h2>
+  <ul>
+    {% for decision in decisions %}
+      <li>
+        <a href="{{ url_for('decision_detail', decision_id=decision.id) }}">{{ decision.title }}</a>
+        (confidence: {{ decision.confidence_level }}/10)
+      </li>
+    {% endfor %}
+  </ul>
+
+  <h2>Try Dynamic Routes</h2>
+  <ul>
+    <li><a href="{{ url_for('member_profile', username='alice') }}">View Alice profile</a></li>
+    <li><a href="{{ url_for('decision_detail', decision_id=999) }}">Trigger a 404 response</a></li>
+  </ul>
+
+  <h2>Try HTTP Response Examples</h2>
+  <ul>
+    <li><a href="{{ url_for('lesson_response') }}">Custom 200 response with header</a></li>
+    <li><a href="{{ url_for('go_home') }}">Redirect response</a></li>
+  </ul>
+
+  <p><a href="{{ url_for('about') }}">About this lesson</a></p>
+</body>
+</html>
