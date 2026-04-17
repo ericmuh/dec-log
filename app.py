@@ -13,6 +13,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 
+# Database model for a decision log entry.
 class Decision(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120), nullable=False)
@@ -23,17 +24,10 @@ class Decision(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
 
-def parse_confidence(raw_value, fallback=3):
-    try:
-        value = int(raw_value)
-    except (TypeError, ValueError):
-        return fallback
-
-    return value if 1 <= value <= 5 else fallback
-
-
 @app.route("/")
 def home():
+
+    # Quering all decisions ordered by creation date (newest first) to display on the homepage.
     decisions = Decision.query.order_by(Decision.created_at.desc()).all()
     return render_template("index.html", decisions=decisions)
 
@@ -48,7 +42,7 @@ def create_decision():
     if request.method == "POST":
         title = request.form.get("title", "").strip()
         reason = request.form.get("reason", "").strip()
-        confidence_level = parse_confidence(request.form.get("confidence_level"))
+        confidence_level = int(request.form.get("confidence_level") or 3)
 
         if title and reason:
             decision = Decision(
@@ -58,8 +52,10 @@ def create_decision():
                 outcome="Pending",
                 lesson="Lesson not recorded yet",
             )
-            db.session.add(decision)
-            db.session.commit()
+            db.session.add(
+                decision
+            )  # adding the new decision to the database session to be saved later.
+            db.session.commit()  # committing the session to save the new decision to the database.
             return redirect(url_for("decision_detail", decision_id=decision.id))
 
     return render_template("create_decision.html")
@@ -67,6 +63,7 @@ def create_decision():
 
 @app.route("/decisions/<int:decision_id>")
 def decision_detail(decision_id):
+    # get_or_404 is a convenient method that tries to retrieve the decision by its ID. If it doesn't exist, it automatically returns a 404 error page.
     decision = Decision.query.get_or_404(decision_id)
     return render_template("decision_detail.html", decision=decision)
 
@@ -87,9 +84,7 @@ def edit_decision(decision_id):
         if reason:
             decision.reason = reason
         if confidence_level:
-            decision.confidence_level = parse_confidence(
-                confidence_level, decision.confidence_level
-            )
+            decision.confidence_level = int(confidence_level)
         if outcome:
             decision.outcome = outcome
         if lesson:
