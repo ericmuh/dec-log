@@ -65,8 +65,6 @@ def create_decision():
         title = request.form.get("title", "").strip()
         reason = request.form.get("reason", "").strip()
         confidence_level = parse_confidence(request.form.get("confidence_level"), 3)
-        outcome = request.form.get("outcome", "Pending").strip() or "Pending"
-        lesson = request.form.get("lesson", "").strip() or "No lesson recorded yet"
 
         if title and reason:
             new_id = max((d["id"] for d in decisions), default=0) + 1
@@ -76,8 +74,8 @@ def create_decision():
                     "title": title,
                     "reason": reason,
                     "confidence_level": confidence_level,
-                    "outcome": outcome,
-                    "lesson": lesson,
+                    "outcome": "Pending",
+                    "lesson": "Lesson not recorded yet",
                     "created_at": date.today().isoformat(),
                 }
             )
